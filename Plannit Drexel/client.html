@@ -1,0 +1,161 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"> </script>
+	<title> Plannit Drexel</title>
+    <link rel="icon" href="https://pbs.twimg.com/media/C5zLLIeWMAI_8N-.png" type="image/png">
+	<script type="text/javascript">
+        function sched(form)
+        {
+            display.innerHTML = null
+            var CName = document.getElementById("courName").value
+            var SCode = document.getElementById("subCode").value
+            var CNum = document.getElementById("courNum").value
+            var URL = "http://localhost:5000/courses?term=3&" + "name=" + CName;
+
+            var json = {
+                "codeName": CName,
+                "subjectCode": SCode,
+                "courseNumber": CNum
+            }
+
+            $.ajax
+            ({
+             type: "POST",
+             url: URL,
+             data: json,
+             dataType: "jsonp",
+             success: function(msg)
+             {
+                var table = document.getElementById("display")
+                var row
+                var cell1
+                var cell2
+                var cell3
+                var cell4
+                var cell5
+
+                var size = msg.length
+                for(i = 0; i < size; i++)
+                {
+                var term = "Spring 2017";
+                var course = msg[x]['subjectcode']
+                var num = msg[x]['coursenumber']
+                var name = msg[x]['coursetitle']
+                var instr = msg[x]['instructor']
+                var crn = msg[x]['crn']
+
+                row = table.insertRow(i)
+                cell1 = row.insertCell(0)
+                cell2 = row.insertCell(1)
+                cell3 = row.insertCell(2)
+                cell4 = row.insertCell(3)
+                cell5 = row.insertCell(4)
+
+                cell1.innerHTML = term
+                cell2.innerHTML = course + " " + num
+                cell3.innerHTML = name
+                cell4.innerHTML = instr
+                cell5.innerHTML = crn
+
+
+                }
+             }
+
+             });
+        }
+
+
+
+
+	</script>
+    <style>
+        body {background-color: #a6d5e7; margin-bottom: 200%;}
+        ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #a6d5e7;
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            background: blue;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: gold;
+        }
+
+    </style>
+    <style>
+        b    {color: #ffff00;}
+        c    {color: #334ab2;}
+
+        #header {
+            background: #0000ff;
+            position: fixed;
+            width: 2000px;
+            height: 150px;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+    #pic {
+        position: fixed;
+        left: 475;
+        z-index: 1;
+    }
+
+    #rest{
+        margin-top: 150px;
+    }
+
+
+    </style>
+</head>
+<body>
+    </div>
+    <div id="header">
+        <center><div id="pic" style="position: fixed; z-index: -99; width: 375px; height: 150px">
+            <iframe frameborder="0" height="100%" width="100%"
+                src="https://pbs.twimg.com/media/C5zknwUWcAEXog9.jpg:large" >
+            </iframe>
+        </div></center>
+        <p>
+    <form>
+        <b> &nbsp; Course Name:</b> <input TYPE="text" ID="courName"/>
+        <p>
+        <b> &nbsp; Subject Code:</b> <input TYPE="text" ID="subCode"/>
+        <p>
+        <b> &nbsp; Course Number:</b> <input TYPE="text" ID="courNum"/>
+        <p>
+        &nbsp; <input TYPE="button" VALUE="Get" onClick="sched(this.form)"/>
+        <p>
+    </form>
+    </div>
+
+    <div id="rest">
+    <center> <table id="display" width="60%">
+        <tr>
+            <td> <c>(Term)</c> </td>
+            <td> <c>(SC + CN)</b> </td>
+            <td> <c>(Course Name)</c> </td>
+            <td> <c>(Instruction)</c> </td>
+            <td> <c>(CRN)</c> </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+    </table> </center>
+    </div>
+
+
+</body>
+</html>
